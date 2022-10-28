@@ -13,6 +13,8 @@ const userDetails = document.getElementById('userDetails')
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
+//test
+
 signInBtn.onclick = () => auth.signInWithPopup(provider);
 
 signOutBtn.onclick = () => auth.signOut();
