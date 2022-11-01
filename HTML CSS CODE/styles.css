@@ -1,7 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+
 h1{
     color: red;
 
 }
-button{
-    color: green
+body{
+    background: #000;;
+}
+.movies {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.movies li{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    background: #272727;
+}
+.movies li img {
+    max-width: 300px;
+    border-radius: 12px;  
+}
+.movies li h2{
+    color: #fff;
+    font-size: 1.8em;
+    padding: auto;
+    margin-top: auto;
 }

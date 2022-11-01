@@ -1,3 +1,4 @@
+/*
 const options = {
   method: 'GET',
   url: 'https://imdb8.p.rapidapi.com/auto-complete',
@@ -7,7 +8,7 @@ const options = {
     'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
   }
 };
-
+/*
 axios?.request(options)
 	.then(function (response) {console.log(response.data);})
 	.then(data => {

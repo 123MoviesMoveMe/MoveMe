@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeamMoveMe</title>
+    <title>123Movies</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+        *{
+            box-sizing: border-box;
+        }
         body{
             display: flex;
             Justify-content: center;
@@ -14,6 +18,8 @@
             height: 100vh;
             width: 100vw;
             margin: 0px;
+            
+            background: rgb(228, 96, 189);
         }
     </style>
 </head>
@@ -43,14 +49,16 @@
 </body>
 </html>
 
+<script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
 
 <script type="module">
     // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
-    import { getDatabase,set,ref, update } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
-
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+    import { getDatabase,set,ref, update } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
 
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -58,26 +66,27 @@
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
-      apiKey: "AIzaSyDRoIiQPye6oUcQktSabcdOVefEzt_kIDw",
-      authDomain: "projectdemo-2d2f5.firebaseapp.com",
-      projectId: "projectdemo-2d2f5",
-      storageBucket: "projectdemo-2d2f5.appspot.com",
-      messagingSenderId: "580695378532",
-      appId: "1:580695378532:web:c952311f9c9c27ffee6d71",
-      measurementId: "G-VBFNB852QP"
+      apiKey: "AIzaSyCFU6jSceooLrksmulCGGajPXXpMAZxJR0",
+      authDomain: "software-engineering-7af33.firebaseapp.com",
+      projectId: "software-engineering-7af33",
+      storageBucket: "software-engineering-7af33.appspot.com",
+      messagingSenderId: "15705666687",
+      appId: "1:15705666687:web:f9cff180f0d81e29cd7b4a",
+      measurementId: "G-KWT004WCW9"
     };
   
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
+    const auth = getAuth(app);
     const database = getDatabase(app);
+    firebase.initializeApp(firebaseConfig);
 
 
     SubmitData.addEventListener('click',(e) => {
         var Email = document.getElementById('Email').value;
         var password = document.getElementById('password').value;
         var Username = document.getElementById('Username').value;
-        var name = document.getElementById('Name')
+        var name = document.getElementById('Name').value;
 
         createUserWithEmailAndPassword(auth, Email, password, Username)
             .then((userCredential) => {
@@ -103,7 +112,7 @@
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
-                alert('errorMessage');
+                alert(errorMessage);
              });
 
         signInWithEmailAndPassword(auth, email, password)
@@ -123,7 +132,7 @@
                     })
                     .catch((error) => {
                         // The write failed...
-                        alert('error');
+                        alert(error);
                     });
             })
             .catch((error) => {
@@ -138,4 +147,5 @@
             //An Error happened
         })
     });
+
   </script>

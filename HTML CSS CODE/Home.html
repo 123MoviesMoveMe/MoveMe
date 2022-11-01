@@ -5,11 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" herf="styles.css" />
     <title>Home</title>
 </head>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+  *{
+      box-sizing: border-box;
+  }
+  body{
+    background: #000;
+}
+.movies {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.movies li{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    background: #272727;
+}
+.movies li img {
+    max-width: 300px;
+    border-radius: 12px;  
+}
+.movies li h2{
+    color: #fff;
+    font-size: 1.8em;
+    padding: auto;
+    margin-top: auto;
+}
+  
+</style>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">123Movies</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,21 +58,28 @@
               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="#">Movies</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Favorites</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                Genre
               </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
+              <div class="Genre">
+                <a class="dropdown-item" href="#">Drama</a>
+                <a class="dropdown-item" href="#">Romantic</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+            <li class="search-container">
+              <a class="nav-link search-container">Search</a>
+              <div class="Search-element">
+                <input type="text" class="form-control"
+                placeholder = "search movie title" id="movie-search-box">
+              </div>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
@@ -51,5 +96,10 @@
           </form>
         </div>
       </nav>
+
+      <div class="movies"></div>
+      <div id="errorMessage" style="color: red;"></div>
+      
+      <script src="main.js"></script>
 </body>
 </html>
