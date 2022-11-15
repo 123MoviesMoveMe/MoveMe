@@ -1,4 +1,5 @@
-# MoveMe
+# 123Movies
+
 This is our CSC190 group project repository.
 
 Firebase Project:
