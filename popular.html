@@ -118,7 +118,7 @@
 
 
 <script 
-type = 'module' src="main.js" defer>
+type = 'module' src="popular.js" defer>
 </script>
 
 
@@ -158,6 +158,7 @@ type = 'module' src="main.js" defer>
                 Genre
               </a>
               <div class="Genre">
+                
                 <a class="dropdown-item" href="#">Drama</a>
                 <a class="dropdown-item" href="#">Romantic</a>
                 <div class="dropdown-divider"></div>
@@ -165,17 +166,18 @@ type = 'module' src="main.js" defer>
               </div>
             </li>
             <li class="search-container">
-              <a class="nav-link search-container">Search</a>
+                <a class="nav-link search-container">Search</a>
+  
+  
+                <button type = "button" id = "refresh" name = "refresh" class="btn btn-primary"> refresh search </button>
+  
+  
+                <div class="Search-element">
+                    <input type="text" class="form-control"
+                    placeholder = "search movie title" id="movie-search-box">
+                  </div>
+                </li>
 
-
-              <button type = "button" id = "refresh" name = "refresh" class="btn btn-primary"> refresh search </button>
-
-
-              <div class="Search-element">
-                <input type="text" class="form-control"
-                placeholder = "search movie title" id="movie-search-box">
-              </div>
-            </li>
           </ul>
 
           <form class="form-inline my-2 my-lg-0">
@@ -231,82 +233,6 @@ type = 'module' src="main.js" defer>
       <section class="movielist">
       <ul id ="myList"></ul>
 
-      <!-- 
-      <script>
-
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '769b117f9amsh69c3c967faaafc5p1e16f7jsn193862156d07',
-		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-	}
-};
-
-function searchMovie2(query) {
-    const url = `https://imdb8.p.rapidapi.com/auto-complete?q=${query}`;
-    fetch(url, options)
-      .then(response => response.json())
-      .then(data => {
-
-      const list = data.d;
-      outdata = list;
-      console.log(list)
-      
-      let liste = document.getElementById("myList");
-      var name;
-      var poster;
-      var details;
-
-      list.forEach(element => {
-
-      });
-
-      const html = list.map(obj => {
-       var names;
-       name = obj.l; // holds the name of movie 
-       poster = obj.i.imageUrl; // holds the poster, i is the image, given by the data 
-      // from item.i.imigeUrl
-       detail = obj.id 
-       console.log(names)
-      });
-      console.log(name)
-      list.forEach((item) => {
-        let li = document.createElement("li");
-        li.innerText = item.i;
-        liste.appendChild(li);
-      });
-
-
-
-      })
-        .catch((error) => {
-      document.getElementById("errorMessage").innerHTML = error;
-    });
-}
-
-        let searchTimeoutToken = 0;
-
-        window.onload = () => {
-            const movieSearchBoxElement = document.getElementById("movie-search-box")
-            movieSearchBoxElement.onkeyup = (event) => {
-                clearTimeout(searchTimeoutToken);
-                
-                searchTimeoutToken=setTimeout(() => {
-                    searchMovie2(movieSearchBoxElement.value);
-                }, 2000);
-                
-            };
-        }
-
-        const whenRefresh = document.getElementById('refresh');
-
-        refresh.addEventListener('click', (e) => {
-              setTimeout(() => {
-              location.reload();  }, 100);
-        });
-
-</script>
--->
 </section>
 
 
