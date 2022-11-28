@@ -287,7 +287,7 @@ function getRecommendation()
 {
 
 
-const url = 'https://function-2-wqdvrw7kia-uc.a.run.app'
+const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
 const token = '2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0OTY2MjIxNzY2OTQzMjYxNzIzIiwiZW1haWwiOiJtbGFyNTU1QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI3M1Y1OW5OamlZM0c1eWZ2M1YyNi1nIiwiaWF0IjoxNjY5NjAyODA4LCJleHAiOjE2Njk2MDY0MDgsImp0aSI6Ijc2YTFhNGEwNWZkM2YyYzY5YjYxODJmZGQxMDkxZDZlODkyOWI1NDgifQ.i-JZD-KVdNdFov2wDYb6i9U7Ti5TZp8V4gdoCK6TVBHKEh1aprSdpTJ9mdEpkS1MUZsN9tG23BsIOrv-lQSTrmz4aUQ-gIOHNcZeYGj99RLk495xNLX5ddzMpT0fzvhMpHvWLWjW4UHaOSYriPvz9wlIJF8RCFHK4YbbjXE0YsGckrHIP8yIH5Rz4Bd9O2_7__NPi0d6ac_RrfJZSLXEIdhs2h1X0KylPMQ5WY5EmvIuswQEqEHlgalPdd-ZkYyA2Yl2pqtZyJP-ZOeyOD2c1zPPm-1DgjfoMJNjHXvq8_ydqKqxwgPvTtTF7F_02nlg_l2-5Y6uHKNGX7U-CewqAw'
 
 //url for proper function
@@ -335,7 +335,7 @@ fetch(url, {
 
 
 
-
+/* UNCOMMENT FOR TESTING
 const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
 const token = '2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0OTY2MjIxNzY2OTQzMjYxNzIzIiwiZW1haWwiOiJtbGFyNTU1QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI3M1Y1OW5OamlZM0c1eWZ2M1YyNi1nIiwiaWF0IjoxNjY5NjAyODA4LCJleHAiOjE2Njk2MDY0MDgsImp0aSI6Ijc2YTFhNGEwNWZkM2YyYzY5YjYxODJmZGQxMDkxZDZlODkyOWI1NDgifQ.i-JZD-KVdNdFov2wDYb6i9U7Ti5TZp8V4gdoCK6TVBHKEh1aprSdpTJ9mdEpkS1MUZsN9tG23BsIOrv-lQSTrmz4aUQ-gIOHNcZeYGj99RLk495xNLX5ddzMpT0fzvhMpHvWLWjW4UHaOSYriPvz9wlIJF8RCFHK4YbbjXE0YsGckrHIP8yIH5Rz4Bd9O2_7__NPi0d6ac_RrfJZSLXEIdhs2h1X0KylPMQ5WY5EmvIuswQEqEHlgalPdd-ZkYyA2Yl2pqtZyJP-ZOeyOD2c1zPPm-1DgjfoMJNjHXvq8_ydqKqxwgPvTtTF7F_02nlg_l2-5Y6uHKNGX7U-CewqAw'
 
@@ -349,4 +349,4 @@ fetch(url, {
     },
     body: JSON.stringify({"movies": ["tt0114709","tt0113228","tt0000324"]})})
     .then(res => res.json()).then(data => console.log(data))
-    
+*/
