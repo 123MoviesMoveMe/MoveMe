@@ -394,7 +394,7 @@ refresh.addEventListener('click', (e) => {
 
 
 
-function getRecommendation()
+async function getRecommendation()
 {
     const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
     const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExNjU1NDk0NzI3MzQxNjU2Nzk0IiwiZW1haWwiOiJrYWlydWkwNjE5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiNVNhUk5DemhLeXFzSUFSRTVHb24tZyIsImlhdCI6MTY2OTc1NjM4MCwiZXhwIjoxNjY5NzU5OTgwLCJqdGkiOiJmYzI4MmEwNzE4NjJiOTAxMGUzYWU4Yzc5ZmI0OGY0NjU2ZGU4MmVjIn0.PWge7pzCCG3IIPNu-Xrt6f8IHw_102K6xOqzwoDyAUsZdccRBv3gcyLiOC_m8ll_HYPAKiiri9XcF561U3llLuN_y6wpO-Og-VEpcZ9I-zzykBdYaumgSh3V8fbJrUc5qI-hJaUW3J7SGvuTbGT7udIMv31t2wMuHzwRESS9mZwCVYSjeNfQ8sMf7p3mPJ30GYlqPWH-iml0JSznwG49JW77cYDmB_hsk1wclxjqCGE5q-K8WU361kOzXNdQVnaqmnv_wpXEWCfdMsQqEJKtMRrKWPjVBf-t-eYSVeJTzLCwaB4T7UcHHxvTJpneaoCEdTmdqYRDL8nMsfyWanz5tw'
@@ -413,7 +413,7 @@ function getRecommendation()
     
             const colUser3 = collection(colUser2, 'MoviesLiked');
             
-            let forAI = []; 
+            const forAI = []; 
     
             //setDoc(collection(colUser2, "Movetitle"));
             // goes to the collection in the doc named "one"
@@ -422,59 +422,59 @@ function getRecommendation()
     
     
     
-              getDocs(colUser3)
-              .then((snapshot) => {
-              let User = []
-                snapshot.docs.forEach((doc) => {
-                    User.push({...doc.data(), id :doc.id })
-                })
+             getDocs(colUser3)
+            .then((snapshot) => {
+            let User = []
+              snapshot.docs.forEach((doc) => {
+                  User.push({...doc.data(), id :doc.id })
+              })
 
-
-                for(let i = 0; i <= User.length; i++)
-                {
-                    forAI[i] = User[i].movieliked;
-                }
+                //if(User.movieliked !== undefined)
+                //{
+                    for(let i = 0; i <= User.length; i++)
+                    {
+                        forAI[i] = User[i].movieliked;
+                    }
+                //}
                 })
+            .catch(err => {
+                console.log(err.message)
+            })
+            //console.log(forAI[1])
+                
+            
+            
+            fetch(url, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'bearer ' + token,
+                        //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
+                    },
+                    body: JSON.stringify({"movies":[forAI[1],forAI[0],"tt0000324"]})})
+                    .then(res => res.json()).then(data => 
+
+                        {
+                            console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
+                            console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0]]})))
+                        console.log(forAI)
+                        console.log(data)
+            })
                 .catch(err => {
+                    console.log("inside catch")
+                    console.log(forAI)
+                    console.log(forAI[1])
+                    console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
+                    console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0],"tt0000324"]})))
                 console.log(err.message)
                 })
+
             console.log("forAI")
             console.log(forAI)
-            fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'bearer ' + token,
-                    //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
-                },
-                body: JSON.stringify({
-                 "movies":
-                 [forAI[1],forAI[2],forAI[3]]
-                
-                
-                })})
-                .then(res => res.json()).then(data => 
-                    {
-                    console.log(data)
-                    if(data.length <= 4)
-                    {
-                        for(let i = 0; i <= 4 ; i++)
-                        {
-                            searchMovie(data[i]);
-                        }
-                    }
-                    else
-                    {
-                        for(let i = 0; i != data.length ; i++)
-                        {
-                            searchMovie(data[i]);
-                        }
-                    }
-        
-                
-        })
         }
+
+
         else {
             whenSignedIn.hidden = true;
             whenSignedOut.hidden = false;
