@@ -103,7 +103,6 @@ export function searchMovie(query) {
 
         const movieList = document.querySelector('.movielist');
         movieList.addEventListener('click', handleClick);
-
         const list = data.d;
         //array of list with data from the movie search
         //data.d is the specific datas that is outputted from the api
@@ -113,6 +112,10 @@ export function searchMovie(query) {
 
         const html = list.map(obj => {
             const button = document.createElement("button");
+            if (obj.i == undefined)
+            {
+                return -1;
+            }
             const name = obj.l; // holds the name of movie 
             
             button.innerText = name;
@@ -121,6 +124,10 @@ export function searchMovie(query) {
                 AddDocument(name, detail);
             })
             buttonsContainer.appendChild(button);
+            if (obj.i == undefined)
+            {
+                return -1;
+            }
             const poster = obj.i.imageUrl; // holds the poster, i is the image, given by the data 
             // from item.i.imigeUrl
             const detail = obj.id 
@@ -316,8 +323,7 @@ auth.onAuthStateChanged(user => {
             snapshot.docs.forEach((doc) => {
                 User.push({...doc.data(), id :doc.id })
             })
-            
-            console.log(User)
+
             })
             .catch(err => {
             console.log(err.message)
@@ -394,16 +400,16 @@ refresh.addEventListener('click', (e) => {
 
 
 
-async function getRecommendation()
+function seperate(list){
+    const x = list.split(':');
+
+    console.log(x)
+    return x[1];
+}
+
+function getlist()
 {
-    const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
-    const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExNjU1NDk0NzI3MzQxNjU2Nzk0IiwiZW1haWwiOiJrYWlydWkwNjE5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiNVNhUk5DemhLeXFzSUFSRTVHb24tZyIsImlhdCI6MTY2OTc1NjM4MCwiZXhwIjoxNjY5NzU5OTgwLCJqdGkiOiJmYzI4MmEwNzE4NjJiOTAxMGUzYWU4Yzc5ZmI0OGY0NjU2ZGU4MmVjIn0.PWge7pzCCG3IIPNu-Xrt6f8IHw_102K6xOqzwoDyAUsZdccRBv3gcyLiOC_m8ll_HYPAKiiri9XcF561U3llLuN_y6wpO-Og-VEpcZ9I-zzykBdYaumgSh3V8fbJrUc5qI-hJaUW3J7SGvuTbGT7udIMv31t2wMuHzwRESS9mZwCVYSjeNfQ8sMf7p3mPJ30GYlqPWH-iml0JSznwG49JW77cYDmB_hsk1wclxjqCGE5q-K8WU361kOzXNdQVnaqmnv_wpXEWCfdMsQqEJKtMRrKWPjVBf-t-eYSVeJTzLCwaB4T7UcHHxvTJpneaoCEdTmdqYRDL8nMsfyWanz5tw'
-
-    //url for proper function
-    //const url = 'https://get-recommendations-654aiu3pva-uk.a.run.app'
-    //const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0OTY2MjIxNzY2OTQzMjYxNzIzIiwiZW1haWwiOiJtbGFyNTU1QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJmWHpGblBJVXpTSi0tbUpzNUNZQnlBIiwiaWF0IjoxNjY5NjA3NzY3LCJleHAiOjE2Njk2MTEzNjcsImp0aSI6IjI3MGMzOTVjNzI4MDA2OGIyZGM2ZGI2NDc1MGYwYWQyYWRlYzc2OTcifQ.CeiY-JxVNAisNEg83uajpvapQ-huS5Ptl-A5DXXBsoHGwZmbNJsGYKmIWEhS_M4476cdqf2zg1BGaHD-LqMihodY3p5LhgDSlMUIRcWnrDnRYrS40O9BLG_CWwrL_FRuBdVnabc2kP7XC-PgBMUlZxg4qGXuE5zuVNT7ufhMlzpfDmNsFqAqSm0dNsWaAUadn0gSpbYURNoC63x7d4b7bCasqFkfKgvOrfmJ8nb6x612RRWoey7LV0tab-IIL3NYSLEXAFfLI5bwXaBg6N2KzQjtiLUI8Cvq8kRD7fYjN5UfwxqvI1rZIloNdmrWBMMEMHVxFP4ddem8Uoe9SJVGBw'
-
-    //fetch to url using CORS protocol
+    const forAI = []; 
     auth.onAuthStateChanged(user => {
         if(user) {
             const colUser = collection(fsinfo, 'User');
@@ -412,8 +418,6 @@ async function getRecommendation()
             // goes to the document in colUser named "one"
     
             const colUser3 = collection(colUser2, 'MoviesLiked');
-            
-            const forAI = []; 
     
             //setDoc(collection(colUser2, "Movetitle"));
             // goes to the collection in the doc named "one"
@@ -421,59 +425,26 @@ async function getRecommendation()
             whenSignedOut.hidden = true;
     
     
-    
-             getDocs(colUser3)
+            getDocs(colUser3)
             .then((snapshot) => {
-            let User = []
+              const User = []
               snapshot.docs.forEach((doc) => {
-                  User.push({...doc.data(), id :doc.id })
+                  User.push({...doc.data()})
               })
-
+             // console.log(User)
                 //if(User.movieliked !== undefined)
                 //{
-                    for(let i = 0; i <= User.length; i++)
+                    for(let i = 0; i <= User.length - 1; i ++)
                     {
-                        forAI[i] = User[i].movieliked;
+                        forAI[i] =  User[i].movieliked;
                     }
                 //}
                 })
+
             .catch(err => {
                 console.log(err.message)
             })
-            //console.log(forAI[1])
-                
-            
-            
-            fetch(url, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'bearer ' + token,
-                        //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
-                    },
-                    body: JSON.stringify({"movies":[forAI[1],forAI[0],"tt0000324"]})})
-                    .then(res => res.json()).then(data => 
-
-                        {
-                            console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
-                            console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0]]})))
-                        console.log(forAI)
-                        console.log(data)
-            })
-                .catch(err => {
-                    console.log("inside catch")
-                    console.log(forAI)
-                    console.log(forAI[1])
-                    console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
-                    console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0],"tt0000324"]})))
-                console.log(err.message)
-                })
-
-            console.log("forAI")
-            console.log(forAI)
         }
-
 
         else {
             whenSignedIn.hidden = true;
@@ -483,9 +454,74 @@ async function getRecommendation()
             console.log("notloggedin");
         }
     })
+    return(forAI)
+}
 
+
+
+async function getRecommendation()
+{
+    const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
+    const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExNjU1NDk0NzI3MzQxNjU2Nzk0IiwiZW1haWwiOiJrYWlydWkwNjE5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiNVNhUk5DemhLeXFzSUFSRTVHb24tZyIsImlhdCI6MTY2OTc1NjM4MCwiZXhwIjoxNjY5NzU5OTgwLCJqdGkiOiJmYzI4MmEwNzE4NjJiOTAxMGUzYWU4Yzc5ZmI0OGY0NjU2ZGU4MmVjIn0.PWge7pzCCG3IIPNu-Xrt6f8IHw_102K6xOqzwoDyAUsZdccRBv3gcyLiOC_m8ll_HYPAKiiri9XcF561U3llLuN_y6wpO-Og-VEpcZ9I-zzykBdYaumgSh3V8fbJrUc5qI-hJaUW3J7SGvuTbGT7udIMv31t2wMuHzwRESS9mZwCVYSjeNfQ8sMf7p3mPJ30GYlqPWH-iml0JSznwG49JW77cYDmB_hsk1wclxjqCGE5q-K8WU361kOzXNdQVnaqmnv_wpXEWCfdMsQqEJKtMRrKWPjVBf-t-eYSVeJTzLCwaB4T7UcHHxvTJpneaoCEdTmdqYRDL8nMsfyWanz5tw'
+
+    //url for proper function
+    //const url = 'https://get-recommendations-654aiu3pva-uk.a.run.app'
+    //const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0OTY2MjIxNzY2OTQzMjYxNzIzIiwiZW1haWwiOiJtbGFyNTU1QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJmWHpGblBJVXpTSi0tbUpzNUNZQnlBIiwiaWF0IjoxNjY5NjA3NzY3LCJleHAiOjE2Njk2MTEzNjcsImp0aSI6IjI3MGMzOTVjNzI4MDA2OGIyZGM2ZGI2NDc1MGYwYWQyYWRlYzc2OTcifQ.CeiY-JxVNAisNEg83uajpvapQ-huS5Ptl-A5DXXBsoHGwZmbNJsGYKmIWEhS_M4476cdqf2zg1BGaHD-LqMihodY3p5LhgDSlMUIRcWnrDnRYrS40O9BLG_CWwrL_FRuBdVnabc2kP7XC-PgBMUlZxg4qGXuE5zuVNT7ufhMlzpfDmNsFqAqSm0dNsWaAUadn0gSpbYURNoC63x7d4b7bCasqFkfKgvOrfmJ8nb6x612RRWoey7LV0tab-IIL3NYSLEXAFfLI5bwXaBg6N2KzQjtiLUI8Cvq8kRD7fYjN5UfwxqvI1rZIloNdmrWBMMEMHVxFP4ddem8Uoe9SJVGBw'
+    //fetch to url using CORS protocol
+    console.log("after getdocs")
+    console.log (getlist())
+    const forai = getlist();
+    console.log("forai")
+    console.log(forai[1])
+    
+            //console.log(forAI[1])
+                
+            
+            /*
+            fetch(url, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'bearer ' + token,
+                        //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
+                    },
+                    body: JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})})
+                    .then(res => res.json()).then(data => 
+
+                        {
+                            console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
+                           // console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0]]})))
+                        //console.log(forAI)
+                        console.log(data)
+                        console.log(data.movies[1])
+                        
+                        for (var i = 0; i != 4; i++)
+                        {
+                            searchMovie(data.movies[i]);
+                            //console.log(searchMovie(data.movies[i]))
+                        }
+            })
+                .catch(err => {
+                    console.log("inside catch")
+                    //console.log(forAI)
+                    //console.log(forAI[1])
+                    console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
+                    //console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0],"tt0000324"]})))
+                console.log(err.message)
+                })
+                */
+            //console.log("forAI")
+            //console.log(forAI)
+
+    
+
+
+}
+
+
+    
       /*
 
-*/}
-
+*/
 getRecommendation();
