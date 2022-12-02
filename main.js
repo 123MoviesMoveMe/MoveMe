@@ -32,7 +32,7 @@ firebase.initializeApp(firebaseConfig);
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'e5211403d0msh294e51f5227f293p153424jsnc09534c8a754',
+		'X-RapidAPI-Key': '769b117f9amsh69c3c967faaafc5p1e16f7jsn193862156d07',
 		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
 	}
 };
@@ -477,7 +477,7 @@ async function getRecommendation()
             //console.log(forAI[1])
                 
             
-            /*
+            
             fetch(url, {
                     method: 'POST',
                     mode: 'cors',
@@ -486,11 +486,13 @@ async function getRecommendation()
                         'Authorization': 'bearer ' + token,
                         //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
                     },
-                    body: JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})})
+                    body: JSON.stringify({"movies":forai})})
                     .then(res => res.json()).then(data => 
 
                         {
                             console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
+                            console.log(JSON.stringify(JSON.stringify({"movies":[forai]})))
+                            console.log(JSON.stringify(JSON.stringify({"movies":forai})))
                            // console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0]]})))
                         //console.log(forAI)
                         console.log(data)
@@ -507,10 +509,12 @@ async function getRecommendation()
                     //console.log(forAI)
                     //console.log(forAI[1])
                     console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
+                    console.log(JSON.stringify(JSON.stringify({"movies":[forai]})))
+                    console.log(JSON.stringify(JSON.stringify({"movies":forai})))
                     //console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0],"tt0000324"]})))
-                console.log(err.message)
+                    console.log(err)
                 })
-                */
+                
             //console.log("forAI")
             //console.log(forAI)
 
