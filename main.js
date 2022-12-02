@@ -407,7 +407,7 @@ function seperate(list){
     return x[1];
 }
 
-function getlist()
+async function getlist()
 {
     const forAI = []; 
     auth.onAuthStateChanged(user => {
@@ -424,7 +424,6 @@ function getlist()
             whenSignedIn.hidden = false;
             whenSignedOut.hidden = true;
     
-    
             getDocs(colUser3)
             .then((snapshot) => {
               const User = []
@@ -434,16 +433,19 @@ function getlist()
              // console.log(User)
                 //if(User.movieliked !== undefined)
                 //{
-                    for(let i = 0; i <= User.length - 1; i ++)
+
+                const delay = User => new Promise(resolve =>setTimeout(resolve, User));
+                for(let i = 0, p = Promise.resolve(); i <= (User.length - 1); i++)
                     {
-                        forAI[i] =  User[i].movieliked;
+                        p = p.then(() => delay(1000))
+                        .then(() => forAI[i] =  User[i].movieliked);
+                        
                     }
+                
                 //}
                 })
 
-            .catch(err => {
-                console.log(err.message)
-            })
+
         }
 
         else {
@@ -469,8 +471,8 @@ async function getRecommendation()
     //const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0OTY2MjIxNzY2OTQzMjYxNzIzIiwiZW1haWwiOiJtbGFyNTU1QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJmWHpGblBJVXpTSi0tbUpzNUNZQnlBIiwiaWF0IjoxNjY5NjA3NzY3LCJleHAiOjE2Njk2MTEzNjcsImp0aSI6IjI3MGMzOTVjNzI4MDA2OGIyZGM2ZGI2NDc1MGYwYWQyYWRlYzc2OTcifQ.CeiY-JxVNAisNEg83uajpvapQ-huS5Ptl-A5DXXBsoHGwZmbNJsGYKmIWEhS_M4476cdqf2zg1BGaHD-LqMihodY3p5LhgDSlMUIRcWnrDnRYrS40O9BLG_CWwrL_FRuBdVnabc2kP7XC-PgBMUlZxg4qGXuE5zuVNT7ufhMlzpfDmNsFqAqSm0dNsWaAUadn0gSpbYURNoC63x7d4b7bCasqFkfKgvOrfmJ8nb6x612RRWoey7LV0tab-IIL3NYSLEXAFfLI5bwXaBg6N2KzQjtiLUI8Cvq8kRD7fYjN5UfwxqvI1rZIloNdmrWBMMEMHVxFP4ddem8Uoe9SJVGBw'
     //fetch to url using CORS protocol
     console.log("after getdocs")
+    const forai = await getlist();
     console.log (getlist())
-    const forai = getlist();
     console.log("forai")
     console.log(forai[1])
     
