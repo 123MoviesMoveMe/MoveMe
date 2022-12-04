@@ -32,10 +32,10 @@ firebase.initializeApp(firebaseConfig);
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '0d95dad010msh4cae9bde49252a9p18ee25jsn6278aa0f0acc',
-		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
-	}
-};
+        'X-RapidAPI-Key': 'a62fb629a0mshed9a237e731b6a2p180e5ejsn0a637e076779',
+        'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
+      }
+	};
 
 
 
@@ -46,7 +46,7 @@ const options = {
 // this will take the id from details and hold it in list2 as a list
 export function searchDetails(query2) {
     
-    const url2 = `https://imdb8.p.rapidapi.com/title/get-synopses?tconst=${query2}`;
+    const url2 = `https://online-movie-database.p.rapidapi.com/title/get-synopses?tconst=${query2}`;
     fetch(url2, options)
 	.then(response2 => response2.json())
 	.then(data2 => {
@@ -98,7 +98,7 @@ export function AddDocument(Name, TTid) {
 const buttonsContainer = document.getElementById("buttonsContainer");
 
 export function searchMovie(query) {
-    const url = `https://movie-database-alternative.p.rapidapi.com/?s=${query}r=json&page=1`;
+    const url = `https://online-movie-database.p.rapidapi.com/auto-complete?q=${query}`;
     fetch(url, options)
 	.then(response => response.json())
 	.then(data => {
@@ -409,127 +409,94 @@ function seperate(list){
     return x[1];
 }
 
+/*
+const querySnapshot = await getDocs(collection(db, "cities"));
+    querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    });
+
+*/
+
+
 async function getlist()
 {
     const forAI = []; 
-    auth.onAuthStateChanged(user => {
-        if(user) {
-            const colUser = collection(fsinfo, 'User');
-            // goes to database colelction "user"
-            const colUser2 = doc(colUser, user.uid);
-            // goes to the document in colUser named "one"
-    
-            const colUser3 = collection(colUser2, 'MoviesLiked');
-    
-            //setDoc(collection(colUser2, "Movetitle"));
-            // goes to the collection in the doc named "one"
-            whenSignedIn.hidden = false;
-            whenSignedOut.hidden = true;
-    
-            getDocs(colUser3)
-            .then((snapshot) => {
-              const User = []
-              snapshot.docs.forEach((doc) => {
-                  User.push({...doc.data()})
-              })
-             // console.log(User)
-                //if(User.movieliked !== undefined)
-                //{
+    const user = firebase.auth().currentUser;
+    if(user) {
+            
+        const colUser =  collection(fsinfo, 'User');
+        const colUser2 = doc(colUser, user.uid/*'X6osFLnyQsNGMh7bAsOgET7G6c82'*/);
+        const colUser3 = collection(colUser2, 'MoviesLiked');
 
-                const delay = User => new Promise(resolve =>setTimeout(resolve, User));
-                for(let i = 0, p = Promise.resolve(); i <= (User.length - 1); i++)
-                    {
-                        p = p.then(() => delay(1000))
-                        .then(() => forAI[i] =  User[i].movieliked);
-                        
-                    }
-                
-                //}
-                })
+        whenSignedIn.hidden = false;
+        whenSignedOut.hidden = true;
 
+        var snapshot = await getDocs(colUser3);
+        snapshot.docs.forEach((doc) =>
+        {
+            forAI.push(doc.data()['movieliked']);
+        });
+        return(forAI)    
+    }
 
-        }
-
-        else {
-            whenSignedIn.hidden = true;
-            whenSignedOut.hidden = false;
-            userDetails.innerHTML = '';
-            console.log( "while logged out" );
-            console.log("notloggedin");
-        }
-    })
-    return(forAI)
+    else {
+        whenSignedIn.hidden = true;
+        whenSignedOut.hidden = false;
+        userDetails.innerHTML = '';
+        console.log( "while logged out" );
+        console.log("notloggedin");
+    }
+return(forAI)
 }
 
 
 
 async function getRecommendation()
 {
-    const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
-    const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExNjU1NDk0NzI3MzQxNjU2Nzk0IiwiZW1haWwiOiJrYWlydWkwNjE5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiNVNhUk5DemhLeXFzSUFSRTVHb24tZyIsImlhdCI6MTY2OTc1NjM4MCwiZXhwIjoxNjY5NzU5OTgwLCJqdGkiOiJmYzI4MmEwNzE4NjJiOTAxMGUzYWU4Yzc5ZmI0OGY0NjU2ZGU4MmVjIn0.PWge7pzCCG3IIPNu-Xrt6f8IHw_102K6xOqzwoDyAUsZdccRBv3gcyLiOC_m8ll_HYPAKiiri9XcF561U3llLuN_y6wpO-Og-VEpcZ9I-zzykBdYaumgSh3V8fbJrUc5qI-hJaUW3J7SGvuTbGT7udIMv31t2wMuHzwRESS9mZwCVYSjeNfQ8sMf7p3mPJ30GYlqPWH-iml0JSznwG49JW77cYDmB_hsk1wclxjqCGE5q-K8WU361kOzXNdQVnaqmnv_wpXEWCfdMsQqEJKtMRrKWPjVBf-t-eYSVeJTzLCwaB4T7UcHHxvTJpneaoCEdTmdqYRDL8nMsfyWanz5tw'
-
-    //url for proper function
-    //const url = 'https://get-recommendations-654aiu3pva-uk.a.run.app'
-    //const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0OTY2MjIxNzY2OTQzMjYxNzIzIiwiZW1haWwiOiJtbGFyNTU1QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJmWHpGblBJVXpTSi0tbUpzNUNZQnlBIiwiaWF0IjoxNjY5NjA3NzY3LCJleHAiOjE2Njk2MTEzNjcsImp0aSI6IjI3MGMzOTVjNzI4MDA2OGIyZGM2ZGI2NDc1MGYwYWQyYWRlYzc2OTcifQ.CeiY-JxVNAisNEg83uajpvapQ-huS5Ptl-A5DXXBsoHGwZmbNJsGYKmIWEhS_M4476cdqf2zg1BGaHD-LqMihodY3p5LhgDSlMUIRcWnrDnRYrS40O9BLG_CWwrL_FRuBdVnabc2kP7XC-PgBMUlZxg4qGXuE5zuVNT7ufhMlzpfDmNsFqAqSm0dNsWaAUadn0gSpbYURNoC63x7d4b7bCasqFkfKgvOrfmJ8nb6x612RRWoey7LV0tab-IIL3NYSLEXAFfLI5bwXaBg6N2KzQjtiLUI8Cvq8kRD7fYjN5UfwxqvI1rZIloNdmrWBMMEMHVxFP4ddem8Uoe9SJVGBw'
-    //fetch to url using CORS protocol
-    console.log("after getdocs")
-    const forai = await getlist();
-    console.log (getlist())
-    console.log("forai")
-    console.log(forai[1])
-    
-            //console.log(forAI[1])
-                
-            
-            
+    auth.onAuthStateChanged(async user => {
+        if(user) {    
+        const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
+        const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExNjU1NDk0NzI3MzQxNjU2Nzk0IiwiZW1haWwiOiJrYWlydWkwNjE5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiNVNhUk5DemhLeXFzSUFSRTVHb24tZyIsImlhdCI6MTY2OTc1NjM4MCwiZXhwIjoxNjY5NzU5OTgwLCJqdGkiOiJmYzI4MmEwNzE4NjJiOTAxMGUzYWU4Yzc5ZmI0OGY0NjU2ZGU4MmVjIn0.PWge7pzCCG3IIPNu-Xrt6f8IHw_102K6xOqzwoDyAUsZdccRBv3gcyLiOC_m8ll_HYPAKiiri9XcF561U3llLuN_y6wpO-Og-VEpcZ9I-zzykBdYaumgSh3V8fbJrUc5qI-hJaUW3J7SGvuTbGT7udIMv31t2wMuHzwRESS9mZwCVYSjeNfQ8sMf7p3mPJ30GYlqPWH-iml0JSznwG49JW77cYDmB_hsk1wclxjqCGE5q-K8WU361kOzXNdQVnaqmnv_wpXEWCfdMsQqEJKtMRrKWPjVBf-t-eYSVeJTzLCwaB4T7UcHHxvTJpneaoCEdTmdqYRDL8nMsfyWanz5tw'
+        //get the recommendations for the ai to base decisions on
+        const forai = await getlist();
+        if(forai.length != 0)
+        {
+            //fetch to url using CORS protocol
             fetch(url, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'bearer ' + token,
-                        //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
-                    },
-                    body: JSON.stringify({"movies":forai})})
-                    .then(res => res.json()).then(data => 
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'bearer ' + token,
+                    //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
+                },
+                body: JSON.stringify({"movies":forai})})
+            .then(res => res.json()).then(data => 
+            {
+                //console.log(JSON.stringify(JSON.stringify({"movies":forai})))
+                console.log(data)
 
-                        {
-                            console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
-                            console.log(JSON.stringify(JSON.stringify({"movies":[forai]})))
-                            console.log(JSON.stringify(JSON.stringify({"movies":forai})))
-                           // console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0]]})))
-                        //console.log(forAI)
-                        console.log(data)
-                        console.log(data.movies[1])
-                        
-                        for (var i = 0; i != 4; i++)
-                        {
-                            searchMovie(data.movies[i]);
-                            //console.log(searchMovie(data.movies[i]))
-                        }
+                //UNCOMMENT THE FOR LOOP FOR MULTIPLE MOVIES and comment the 1 line
+                searchMovie(data.movies[0]);
+                /*
+                for (var i = 0; i != 4; i++)
+                {
+                    searchMovie(data.movies[i]);
+                }*/
+            }).catch(err => {
+                console.log("inside catch")
+                //console.log(forAI)
+                //console.log(forAI[1])
+                console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
+                console.log(JSON.stringify(JSON.stringify({"movies":forai})))
+                console.log(err)
             })
-                .catch(err => {
-                    console.log("inside catch")
-                    //console.log(forAI)
-                    //console.log(forAI[1])
-                    console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
-                    console.log(JSON.stringify(JSON.stringify({"movies":[forai]})))
-                    console.log(JSON.stringify(JSON.stringify({"movies":forai})))
-                    //console.log(JSON.stringify(JSON.stringify({"movies":[forAI[1],forAI[0],"tt0000324"]})))
-                    console.log(err)
-                })
-                
-            //console.log("forAI")
-            //console.log(forAI)
-
-    
-
-
+        }
+        }else{
+            console.log("There is no user logged in at the moment!")
+        }
+    })    
 }
-
-
-    
-      /*
-
-*/
-getRecommendation();
+//UNCOMMENT THIS TO get recommendations!
+//getRecommendation();
