@@ -32,10 +32,12 @@ firebase.initializeApp(firebaseConfig);
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '769b117f9amsh69c3c967faaafc5p1e16f7jsn193862156d07',
-		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+		'X-RapidAPI-Key': '0d95dad010msh4cae9bde49252a9p18ee25jsn6278aa0f0acc',
+		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
 	}
 };
+
+
 
 
 
@@ -96,7 +98,7 @@ export function AddDocument(Name, TTid) {
 const buttonsContainer = document.getElementById("buttonsContainer");
 
 export function searchMovie(query) {
-    const url = `https://imdb8.p.rapidapi.com/auto-complete?q=${query}`;
+    const url = `https://movie-database-alternative.p.rapidapi.com/?s=${query}r=json&page=1`;
     fetch(url, options)
 	.then(response => response.json())
 	.then(data => {

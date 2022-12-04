@@ -45,17 +45,87 @@
 }
   
 </style>
+
+<script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
+<script type="module">
+  
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    import {getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut
+          } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { 
+      getFirestore, collection, getDocs, addDoc, setDoc, doc
+    } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+    import { getDatabase,set,ref, update } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use;
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    const firebaseConfig = {
+    apiKey: "AIzaSyCFU6jSceooLrksmulCGGajPXXpMAZxJR0",
+    authDomain: "software-engineering-7af33.firebaseapp.com",
+    projectId: "software-engineering-7af33",
+    storageBucket: "software-engineering-7af33.appspot.com",
+    messagingSenderId: "15705666687",
+    appId: "1:15705666687:web:f9cff180f0d81e29cd7b4a",
+    measurementId: "G-KWT004WCW9"
+  };
+    const app = initializeApp(firebaseConfig);
+
+    firebase.initializeApp(firebaseConfig);
+
+    const auth2 = firebase.auth();
+
+    signOutBtn.onclick = () => auth2.signOut();
+    //const auth = getAuth(app);
+
+    auth2.onAuthStateChanged(user =>  {
+    if (user) {
+        whenSignedIn.hidden = false;
+        whenSignedOut.hidden = true;
+        const uid = user.uid;
+        userDetails.innerHTML = `<h3>Hello ${user.displayName}!</h3> <p>User ID: ${user.uid}</p>`;
+            console.log( "testing.." );
+            console.log("logged in");
+       // storeUserUid(user);
+       /// getUser();
+    } else {
+        whenSignedIn.hidden = true;
+        whenSignedOut.hidden = false;
+        userDetails.innerHTML = '';
+        console.log( "testing.." );
+            console.log("notloggedin");
+    }
+});
+
+
+
+
+
+</script>
+
+
+<script type = 'module' src="main.js" defer></script>
+
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
         <a class="navbar-brand" href="#">123Movies</a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+
+                <span class="navbar-toggler-icon"></span>
+
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="main.js">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Movies</a>
@@ -68,30 +138,67 @@
                 Genre
               </a>
               <div class="Genre">
-                <a class="dropdown-item" href="#">Drama</a>
-                <a class="dropdown-item" href="#">Romantic</a>
+                <a class="dropdown-item" href="popular.js">Popular</a>
+                <a class="dropdown-item" href="#">Recomended</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
             <li class="search-container">
               <a class="nav-link search-container">Search</a>
+
+
+              <button type = "button" id = "refresh" name = "refresh" class="btn btn-primary"> refresh search </button>
+
+
               <div class="Search-element">
                 <input type="text" class="form-control"
                 placeholder = "search movie title" id="movie-search-box">
               </div>
             </li>
           </ul>
+
           <form class="form-inline my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a id="user-link" href="#">Username</a>
-                </li>
+              
 
-                <li class="nav-item active">
-                    <a id="signOut-link" href="#">SignOut</a>
-                  </li>
+
+
+
+
             
+              <section id = "whenSignedOut">
+                <li class="nav-item active">
+                  <a id = "RegisterBtn" href="register.html" class="badge badge-secondary py-1 ww-100">Create an Account</a>
+              </li>
+
+              <li class="nav-item active"> 
+                  <a id = "signInBtn" href="Login.html" class="badge badge-secondary py-1 ww-100">Login</a>
+              </li>
+                
+              </section>
+
+
+
+            
+              <section id = "whenSignedIn" hidden = "true">
+
+                <div id ="userDetails"></div>
+                <button id = "signOutBtn" class="btn btn-primary"> Sign Out </button>
+              </section>
+
+            
+
+
+
+
+
+
+
+
+
+
+
               </ul>
           </form>
         </div>
@@ -99,9 +206,8 @@
 
       <div class="movies"></div>
       <div id="errorMessage" style="color: red;"></div>
+
       
-      <script src="main.js"></script>
-      <script src="movieInfo.html"></script>
-     
+
 </body>
 </html>
