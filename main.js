@@ -114,9 +114,15 @@ export function searchMovie(query) {
             const button = document.createElement("button");
             if (obj.i == undefined)
             {
-                return -1;
+                return ;
             }
-            const name = obj.l; // holds the name of movie 
+            const name = obj.l; // holds the name of movie
+            const detail = obj.id 
+            console.log(name) 
+            if(detail[0] != 't' || detail[1] != 't')
+            {
+                return ;
+            }
             
             button.innerText = name;
             button.addEventListener("click",function(){
@@ -126,11 +132,10 @@ export function searchMovie(query) {
             buttonsContainer.appendChild(button);
             if (obj.i == undefined)
             {
-                return -1;
+                return ;
             }
             const poster = obj.i.imageUrl; // holds the poster, i is the image, given by the data 
-            // from item.i.imigeUrl
-            const detail = obj.id 
+
             return `
               <section class="movie">
               <img src="${poster}"
