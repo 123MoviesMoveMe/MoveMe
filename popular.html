@@ -14,14 +14,14 @@
       box-sizing: border-box;
   }
   body{
-    background: rgb(255, 255, 255);
-}
-.movies {
+    background: #000;
+  }
+  .movies {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-}
-.movies li{
+  }
+  .movies li{
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -32,24 +32,20 @@
     border-radius: 12px;
     text-align: center;
     background: #272727;
-}
-.movies li img {
+  }
+  .movies li img {
     max-width: 300px;
     border-radius: 12px;  
-}
-.movies li h2{
+  }
+  .movies li h2{
     color: #fff;
     font-size: 1.8em;
-    padding: auto;
+    padding: 15px 10px 0;
     margin-top: auto;
-}
-.movie { border: 1px solid #555; padding: 0.5em;}
-      .movie header { text-transform: uppercase; background-color: #efefef; }
-      .details { display: none; }
-      .show { display: block; }
-      button { margin-top: 0.5em; }
+    font-family: "Oswald", sans-serif;
+  }
   
-</style>
+  </style>
 
 <script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
@@ -137,7 +133,7 @@ type = 'module' src="popular.js" defer>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="Home.html">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="Recommended.html">Movies</a>
@@ -200,7 +196,7 @@ type = 'module' src="popular.js" defer>
               <section id = "whenSignedIn" hidden = "true">
 
                 <div id ="userDetails"></div>
-                <button id = "signOutBtn" class="btn btn-primary"> Sign Out </button>
+                <button id = "signOutBtn" href="home.html" class="btn btn-primary"> Sign Out </button>
               </section>
 
             

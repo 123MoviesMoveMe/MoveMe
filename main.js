@@ -95,16 +95,14 @@ export function AddDocument(Name, TTid) {
 
 // query can either be a title or a tt id
 
-const buttonsContainer = document.getElementById("buttonsContainer");
+// const buttonsContainer = document.getElementById("buttonsContainer");
 
 export function searchMovie(query) {
-    const url = `https://online-movie-database.p.rapidapi.com/auto-complete?q=${query}`;
+    const url = `https://imdb8.p.rapidapi.com/auto-complete?q=${query}`;
     fetch(url, options)
 	.then(response => response.json())
 	.then(data => {
 
-        const movieList = document.querySelector('.movielist');
-        movieList.addEventListener('click', handleClick);
         const list = data.d;
         //array of list with data from the movie search
         //data.d is the specific datas that is outputted from the api
@@ -112,52 +110,59 @@ export function searchMovie(query) {
         console.log(list)
         // ^ will output what list holds
 
-        const html = list.map(obj => {
-            const button = document.createElement("button");
-            if (obj.i == undefined)
-            {
-                return ;
-            }
-            const name = obj.l; // holds the name of movie
-            const detail = obj.id 
-            console.log(name) 
-            if(detail[0] != 't' || detail[1] != 't')
-            {
-                return ;
-            }
-            
-            button.innerText = name;
-            button.addEventListener("click",function(){
-                console.log(name);
-                AddDocument(name, detail);
-            })
-            buttonsContainer.appendChild(button);
-            if (obj.i == undefined)
-            {
-                return ;
-            }
+        list.map(obj => {//makes a list of each individual movie from the data
+           // console.log(item)
+            //^ will output the individual data in list
+
+            const name = obj.l; // holds the name of movie 
+            // from item.l
+
             const poster = obj.i.imageUrl; // holds the poster, i is the image, given by the data 
+            // from item.i.imigeUrl
 
-            return `
-              <div class="movie">
-                <li><img src="${poster}"> <h2>${name}</h2></li>
-                <section class = "details">${detail}</section>
-                <button type="button">Movie Details</button> 
-              </div>
-            `;
-          }).join('');
-          
-          // Insert that HTML on to the movie list element
+            const detail = obj.id; // holds the movie id
+            // this will give a tt id, we can use this to
+            // make a api call to get-synopses
+            
+            
+            
+            //searchDetails(detail); 
+            // will seach for the details ^ code works but will burn out the api responce
+            // very fast we should use it somewhere else or place a timer on this
+            // as we can only have 5 requests per sec
+            // also some movies dont have any details
+            // 
+            
 
 
-          function handleClick(e) {
-            if (e.target.matches('button')) {
-            const details = e.target.previousElementSibling;
-            details.classList.toggle('show');
-            }
-        } 
+            // below is what shows the poster, movie name, etc
+            const movie = 
 
-          movieList.insertAdjacentHTML('beforeend', html);
+            `<div class="colmd3">
+                    <div class = "well text-center">
+                        <li><img src="${poster}">
+                        <h2>${name}</h2></li> 
+                        <button id = "unlikebnt" onclick="movieSelected('${detail}')" class="btn btn-primary" href="#">Movie Details</button> 
+                    </div>
+                </div>`;
+
+
+
+            document.querySelector('.movies').innerHTML += movie; // Add lsit of movies and poster to movie div
+
+        });
+    
+        document.getElementById("errorMessage").innerHTML = "";
+    })
+	.catch((error) => {
+        document.getElementById("errorMessage").innerHTML = error;
+    });
+
+    // we should make a condition here for when a new item is placed here there will be a page refresh
+   // setTimeout(() => {
+   //     location.reload();  }, 2000);
+}
+
 
 
             //const data=[{name:"movie1",poster:"img1",details:"Details for movie1."},{name:"movie2",poster:"img2",details:"Details for movie2."},{name:"movie3",poster:"img3",details:"Details for movie3."}];
@@ -242,19 +247,7 @@ export function searchMovie(query) {
             //console.log()
 */
 //        });
-    
-        document.getElementById("errorMessage").innerHTML = "";
-    })
-	.catch((error) => {
-        document.getElementById("errorMessage").innerHTML = error;
-    });
-
-    // we should make a condition here for when a new item is placed here there will be a page refresh
-   // setTimeout(() => {
-   //     location.reload();  }, 2000);
-}
-
-
+ 
 
 
 // Cache the movie list element, and attach a listener to it

@@ -29,10 +29,11 @@ firebase.initializeApp(firebaseConfig);
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'e5211403d0msh294e51f5227f293p153424jsnc09534c8a754',
-		'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
+		'X-RapidAPI-Key': '0d95dad010msh4cae9bde49252a9p18ee25jsn6278aa0f0acc',
+		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
 	}
 };
+
 async function delay(time) {
   return new Promise(resolve => setTimeout(resolve, time));
 }
@@ -43,11 +44,11 @@ function seperate(list){
     return x[2];
 }
 
-async function searchTopMovies() {
+async function searchGenre() {
     
-    const url3 = 'https://online-movie-database.p.rapidapi.com/title/get-most-popular-movies'
-    fetch(url3, options)
-	.then(response2 => response2.json())
+    const url = 'https://imdb8.p.rapidapi.com/title/v2/get-popular-movies-by-genre?genre=adventure&limit=20'
+    fetch(url, options)
+	.then(response => response.json())
 	.then(data2 => {
         console.log(data2)
 
@@ -119,6 +120,4 @@ async function searchTopMovies() {
         document.getElementById("errorMessage").innerHTML = error;
     });
 }
-
-
-console.log(searchTopMovies())
+console.log(searchGenre())

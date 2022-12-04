@@ -9,65 +9,43 @@
     <title>Home</title>
 </head>
 <style>
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-*{
-    box-sizing: border-box;
-}
-body{
-  background: #000;
-}
-.movies {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-.movies li{
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style: none;
-  margin: 10px;
-  padding: 15px;
-  border-radius: 12px;
-  text-align: center;
-  background: #272727;
-}
-.movies li img {
-  max-width: 300px;
-  border-radius: 12px;  
-}
-.movies li h2{
-  color: #fff;
-  font-size: 1.8em;
-  padding: 15px 10px 0;
-  margin-top: auto;
-  font-family: "Oswald", sans-serif;
-}
-.Search-element {
-  display: flex;
-  justify-content: center;
-  column-gap: 1rem;
-  margin-top: 2rem;
-  padding: 2rem 0 1rem;
-}
-
-.Search-element input,
-.Search-element button{
-  padding: .5rem 1rem;
-  font-size: 1rem;
-  background-color: white;
-  border: none;
-  outline: none;
-  border: 2px solid rgba(rgb(241, 233, 233));
-  color: rgb(23, 1, 1)
-}
-.Search-element{
-  cursor: pointer;
-}
-.Search-element button:hover{background-color: rgba(rgb(220, 233, 240)); }
-.Search-element button:active{ transform: scale(.9);}
-</style>
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+  *{
+      box-sizing: border-box;
+  }
+  body{
+    background: #000;
+  }
+  .movies {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .movies li{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    background: #272727;
+  }
+  .movies li img {
+    max-width: 300px;
+    border-radius: 12px;  
+  }
+  .movies li h2{
+    color: #fff;
+    font-size: 1.8em;
+    padding: 15px 10px 0;
+    margin-top: auto;
+    font-family: "Oswald", sans-serif;
+  }
+  
+  </style>
 
 <script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
@@ -110,7 +88,6 @@ body{
         whenSignedIn.hidden = false;
         whenSignedOut.hidden = true;
         const uid = user.uid;
-        //userDetails.innerHTML = `<h3>Hello ${user.displayName}!</h3> <p>User ID: ${user.uid}</p>`;
             console.log( "testing.." );
             console.log("logged in");
        // storeUserUid(user);
@@ -133,6 +110,12 @@ body{
 
 
 </script>
+
+
+<script 
+type = 'module' src="Home.js" defer>
+</script>
+
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -170,6 +153,7 @@ body{
                 Genre
               </a>
               <div class="Genre">
+                
                 <a class="dropdown-item" href="#">Drama</a>
                 <a class="dropdown-item" href="#">Romantic</a>
                 <div class="dropdown-divider"></div>
@@ -177,18 +161,18 @@ body{
               </div>
             </li>
             <li class="search-container">
-              <a class="nav-link search-container">Search</a>
-
-
-              <button type = "button" id = "refresh" name = "refresh" class="btn btn-primary"> refresh search </button>
-
-
-              <div class="Search-element">
+                <a class="nav-link search-container">Search</a>
+  
+  
+                <button type = "button" id = "refresh" name = "refresh" class="btn btn-primary"> refresh search </button>
+  
+  
+                <div class="Search-element">
                 <input type="text" class="form-control"
                 placeholder = "search movie title" id="movie-search-box">
-                <button>Search</button>
               </div>
             </li>
+
           </ul>
 
           <form class="form-inline my-2 my-lg-0">
@@ -244,87 +228,8 @@ body{
       <section class="movielist">
       <ul id ="myList"></ul>
 
-      <!-- 
-      <script>
-
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '769b117f9amsh69c3c967faaafc5p1e16f7jsn193862156d07',
-		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-	}
-};
-
-function searchMovie2(query) {
-    const url = `https://imdb8.p.rapidapi.com/auto-complete?q=${query}`;
-    fetch(url, options)
-      .then(response => response.json())
-      .then(data => {
-
-      const list = data.d;
-      outdata = list;
-      console.log(list)
-      
-      let liste = document.getElementById("myList");
-      var name;
-      var poster;
-      var details;
-
-      list.forEach(element => {
-
-      });
-
-      const html = list.map(obj => {
-       var names;
-       name = obj.l; // holds the name of movie 
-       poster = obj.i.imageUrl; // holds the poster, i is the image, given by the data 
-      // from item.i.imigeUrl
-       detail = obj.id 
-       console.log(names)
-      });
-      console.log(name)
-      list.forEach((item) => {
-        let li = document.createElement("li");
-        li.innerText = item.i;
-        liste.appendChild(li);
-      });
-
-
-
-      })
-        .catch((error) => {
-      document.getElementById("errorMessage").innerHTML = error;
-    });
-}
-
-        let searchTimeoutToken = 0;
-
-        window.onload = () => {
-            const movieSearchBoxElement = document.getElementById("movie-search-box")
-            movieSearchBoxElement.onkeyup = (event) => {
-                clearTimeout(searchTimeoutToken);
-                
-                searchTimeoutToken=setTimeout(() => {
-                    searchMovie2(movieSearchBoxElement.value);
-                }, 2000);
-                
-            };
-        }
-
-        const whenRefresh = document.getElementById('refresh');
-
-        refresh.addEventListener('click', (e) => {
-              setTimeout(() => {
-              location.reload();  }, 100);
-        });
-
-</script>
--->
-<script 
-type = 'module' src="main.js" defer>
-</script>
 </section>
 
 
 </body>
-</html> 
+</html>

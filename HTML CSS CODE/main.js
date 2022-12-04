@@ -33,17 +33,11 @@ firebase.initializeApp(firebaseConfig);
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '0d95dad010msh4cae9bde49252a9p18ee25jsn6278aa0f0acc',
-		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
-	}
-};
+        'X-RapidAPI-Key': 'a62fb629a0mshed9a237e731b6a2p180e5ejsn0a637e076779',
+        'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
+      }
+	};
 
-function searchMovie(query) {
-    const url = `https://movie-database-alternative.p.rapidapi.com/?s=${query}=json&page=1`
-fetch('', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
 
 
 
@@ -61,17 +55,17 @@ function searchMovie(query) {
         console.log(list)
         // ^ will output what list holds
 
-        list.map((item) => { //makes a list of each individual movie from the data
+        list.map(obj => {//makes a list of each individual movie from the data
            // console.log(item)
             //^ will output the individual data in list
 
-            const name = item.l; // holds the name of movie 
+            const name = obj.l; // holds the name of movie 
             // from item.l
 
-            const poster = item.i.imageUrl; // holds the poster, i is the image, given by the data 
+            const poster = obj.i.imageUrl; // holds the poster, i is the image, given by the data 
             // from item.i.imigeUrl
 
-            const detail = item.id // holds the movie id
+            const detail = obj.id; // holds the movie id
             // this will give a tt id, we can use this to
             // make a api call to get-synopses
             
@@ -93,12 +87,6 @@ function searchMovie(query) {
                     <div class = "well text-center">
                         <li><img src="${poster}">
                         <h2>${name}</h2></li> 
-                        <section id = "whenunliked">
-                        <button onclick="movielike('${detail}')" class="btn btn-primary" href="#"> like </button>
-                        </section>
-                        <section id ="whenliked" hidden = "true">
-                        <button id = "likebnt" onclick="movielike('${detail}')" class="btn btn-primary" href="#"> unlike </button>
-                        </section>
                         <button id = "unlikebnt" onclick="movieSelected('${detail}')" class="btn btn-primary" href="#">Movie Details</button> 
                     </div>
                 </div>`;
