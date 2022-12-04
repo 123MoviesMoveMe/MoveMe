@@ -32,10 +32,10 @@ firebase.initializeApp(firebaseConfig);
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '769b117f9amsh69c3c967faaafc5p1e16f7jsn193862156d07',
-		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-	}
-};
+        'X-RapidAPI-Key': 'a62fb629a0mshed9a237e731b6a2p180e5ejsn0a637e076779',
+        'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
+      }
+	};
 
 
 
@@ -44,7 +44,7 @@ const options = {
 // this will take the id from details and hold it in list2 as a list
 export function searchDetails(query2) {
     
-    const url2 = `https://imdb8.p.rapidapi.com/title/get-synopses?tconst=${query2}`;
+    const url2 = `https://online-movie-database.p.rapidapi.com/title/get-synopses?tconst=${query2}`;
     fetch(url2, options)
 	.then(response2 => response2.json())
 	.then(data2 => {
@@ -96,7 +96,7 @@ export function AddDocument(Name, TTid) {
 const buttonsContainer = document.getElementById("buttonsContainer");
 
 export function searchMovie(query) {
-    const url = `https://imdb8.p.rapidapi.com/auto-complete?q=${query}`;
+    const url = `https://online-movie-database.p.rapidapi.com/auto-complete?q=${query}`;
     fetch(url, options)
 	.then(response => response.json())
 	.then(data => {
@@ -474,10 +474,14 @@ async function getRecommendation()
             {
                 //console.log(JSON.stringify(JSON.stringify({"movies":forai})))
                 console.log(data)
+
+                //UNCOMMENT THE FOR LOOP FOR MULTIPLE MOVIES and comment the 1 line
+                searchMovie(data.movies[0]);
+                /*
                 for (var i = 0; i != 4; i++)
                 {
                     searchMovie(data.movies[i]);
-                }
+                }*/
             }).catch(err => {
                 console.log("inside catch")
                 //console.log(forAI)
@@ -492,4 +496,5 @@ async function getRecommendation()
         }
     })    
 }
-getRecommendation();
+//UNCOMMENT THIS TO get recommendations!
+//getRecommendation();
