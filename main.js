@@ -172,13 +172,11 @@ export function searchMovie(query) {
         list.map((item) => { //makes a list of each individual movie from the data
             console.log(item)
             //^ will output the individual data in list
-
             const name = item.l; // holds the name of movie 
             // from item.l
             console.log(name)
             const poster = item.i.imageUrl; // holds the poster, i is the image, given by the data 
             // from item.i.imigeUrl
-
             const detail = item.id 
             console.log(detail)
 */
@@ -205,7 +203,6 @@ export function searchMovie(query) {
                     movieliked: detail,
                 })
             }
-
             else {
                 whenSignedIn.hidden = true;
                 whenSignedOut.hidden = false;
@@ -223,7 +220,6 @@ export function searchMovie(query) {
             // below is what shows the poster, movie name, etc
 /*
             const movie = 
-
             `
                 <section class="colmd3">
                     <section class = "well text-center">
@@ -231,24 +227,13 @@ export function searchMovie(query) {
                         <h2>${name}</h2>
                         </li> 
                 
-
                         <button onclick="movielike('${detail}')" class="btn btn-primary" href="#"> like </button>
-
-
-
                         <button onclick = " movielike('${detail}')" id = "likebtn" class="btn btn-primary" href="#"> unlike </button>
-
                     
                         <button type = "button" id = "MovieDetails" class="btn btn-primary" href="#">Movie Details</button> 
-
-
-
                     </section>
                 </section>
                `;
-
-
-
             document.querySelector('.movies').innerHTML += movie; // returns the first element movies and poster to movie div
             //console.log()
 */
@@ -354,7 +339,6 @@ auth.onAuthStateChanged(user => {
         page.map((item) => {
             const poster = item.i.imageUrl; // poster, i is the image, given by the data
             const detail = item.id
-
             const moviePicked = `
                 <div class = "row">
                     <div class="col-md-4">
@@ -413,87 +397,4 @@ const querySnapshot = await getDocs(collection(db, "cities"));
     // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, " => ", doc.data());
     });
-
 */
-
-
-async function getlist()
-{
-    const forAI = []; 
-    const user = firebase.auth().currentUser;
-    if(user) {
-            
-        const colUser =  collection(fsinfo, 'User');
-        const colUser2 = doc(colUser, user.uid/*'X6osFLnyQsNGMh7bAsOgET7G6c82'*/);
-        const colUser3 = collection(colUser2, 'MoviesLiked');
-
-        whenSignedIn.hidden = false;
-        whenSignedOut.hidden = true;
-
-        var snapshot = await getDocs(colUser3);
-        snapshot.docs.forEach((doc) =>
-        {
-            forAI.push(doc.data()['movieliked']);
-        });
-        return(forAI)    
-    }
-
-    else {
-        whenSignedIn.hidden = true;
-        whenSignedOut.hidden = false;
-        userDetails.innerHTML = '';
-        console.log( "while logged out" );
-        console.log("notloggedin");
-    }
-return(forAI)
-}
-
-
-
-async function getRecommendation()
-{
-    auth.onAuthStateChanged(async user => {
-        if(user) {    
-        const url = 'https://get-recommendation-654aiu3pva-uk.a.run.app'
-        const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjE4MzkyM2M4Y2ZlYzEwZjkyY2IwMTNkMDZlMWU3Y2RkNzg3NGFlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExNjU1NDk0NzI3MzQxNjU2Nzk0IiwiZW1haWwiOiJrYWlydWkwNjE5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiNVNhUk5DemhLeXFzSUFSRTVHb24tZyIsImlhdCI6MTY2OTc1NjM4MCwiZXhwIjoxNjY5NzU5OTgwLCJqdGkiOiJmYzI4MmEwNzE4NjJiOTAxMGUzYWU4Yzc5ZmI0OGY0NjU2ZGU4MmVjIn0.PWge7pzCCG3IIPNu-Xrt6f8IHw_102K6xOqzwoDyAUsZdccRBv3gcyLiOC_m8ll_HYPAKiiri9XcF561U3llLuN_y6wpO-Og-VEpcZ9I-zzykBdYaumgSh3V8fbJrUc5qI-hJaUW3J7SGvuTbGT7udIMv31t2wMuHzwRESS9mZwCVYSjeNfQ8sMf7p3mPJ30GYlqPWH-iml0JSznwG49JW77cYDmB_hsk1wclxjqCGE5q-K8WU361kOzXNdQVnaqmnv_wpXEWCfdMsQqEJKtMRrKWPjVBf-t-eYSVeJTzLCwaB4T7UcHHxvTJpneaoCEdTmdqYRDL8nMsfyWanz5tw'
-        //get the recommendations for the ai to base decisions on
-        const forai = await getlist();
-        if(forai.length != 0)
-        {
-            //fetch to url using CORS protocol
-            fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'bearer ' + token,
-                    //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500'
-                },
-                body: JSON.stringify({"movies":forai})})
-            .then(res => res.json()).then(data => 
-            {
-                //console.log(JSON.stringify(JSON.stringify({"movies":forai})))
-                console.log(data)
-
-                //UNCOMMENT THE FOR LOOP FOR MULTIPLE MOVIES and comment the 1 line
-                //searchMovie(data.movies[0]);
-                for (var i = 0; i != 5; i++)
-                {
-                    searchMovie(data.movies[i]);
-                }
-            }).catch(err => {
-                console.log("inside catch")
-                //console.log(forAI)
-                //console.log(forAI[1])
-                console.log(JSON.stringify(JSON.stringify({"movies":["tt0114709","tt0113228","tt0000324"]})))
-                console.log(JSON.stringify(JSON.stringify({"movies":forai})))
-                console.log(err)
-            })
-        }
-        }else{
-            console.log("There is no user logged in at the moment!")
-        }
-    })    
-}
-//UNCOMMENT THIS TO get recommendations!
-//getRecommendation();

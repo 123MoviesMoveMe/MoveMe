@@ -23,7 +23,7 @@
     </style>
 
     <script type="module">
-        
+
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
@@ -125,6 +125,7 @@
 
 
 
+  
   const auth2 = firebase.auth();
   const whenSignedIn = document.getElementById('whenSignedIn');
   const whenSignedOut = document.getElementById('whenSignedOut');
@@ -142,12 +143,8 @@ auth2.onAuthStateChanged(user =>  {
         whenSignedOut.hidden = true;
         const uid = user.uid;
         userDetails.innerHTML = `<h3>Hello ${user.displayName}!</h3> <p>User ID: ${user.uid}</p>`;
-
-        const data = {
-            id: uid,
-        };
         console.log( "testing.." );
-            console.log("logged in");
+          console.log("logged in");
        // storeUserUid(user);
        /// getUser();
     } else {
@@ -155,6 +152,7 @@ auth2.onAuthStateChanged(user =>  {
         whenSignedOut.hidden = false;
         userDetails.innerHTML = '';
         console.log( "testing.." );
+
             console.log("notloggedin");
     }
 });

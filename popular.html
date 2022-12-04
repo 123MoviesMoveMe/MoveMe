@@ -92,7 +92,6 @@
         whenSignedIn.hidden = false;
         whenSignedOut.hidden = true;
         const uid = user.uid;
-        userDetails.innerHTML = `<h3>Hello ${user.displayName}!</h3> <p>User ID: ${user.uid}</p>`;
             console.log( "testing.." );
             console.log("logged in");
        // storeUserUid(user);
@@ -141,7 +140,7 @@ type = 'module' src="popular.js" defer>
               <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Movies</a>
+              <a class="nav-link" href="Recommended.html">Movies</a>
             </li>
             <li class="nav-item">
 
@@ -173,10 +172,10 @@ type = 'module' src="popular.js" defer>
   
   
                 <div class="Search-element">
-                    <input type="text" class="form-control"
-                    placeholder = "search movie title" id="movie-search-box">
-                  </div>
-                </li>
+                <input type="text" class="form-control"
+                placeholder = "search movie title" id="movie-search-box">
+              </div>
+            </li>
 
           </ul>
 
