@@ -476,12 +476,11 @@ async function getRecommendation()
                 console.log(data)
 
                 //UNCOMMENT THE FOR LOOP FOR MULTIPLE MOVIES and comment the 1 line
-                searchMovie(data.movies[0]);
-                /*
-                for (var i = 0; i != 4; i++)
+                //searchMovie(data.movies[0]);
+                for (var i = 0; i != 5; i++)
                 {
                     searchMovie(data.movies[i]);
-                }*/
+                }
             }).catch(err => {
                 console.log("inside catch")
                 //console.log(forAI)
