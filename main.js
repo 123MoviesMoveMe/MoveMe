@@ -134,14 +134,11 @@ export function searchMovie(query) {
             // from item.i.imigeUrl
             const detail = obj.id 
             return `
-              <section class="movie">
-              <img src="${poster}"
-              width = "500"
-              height = "800"/>
-              <h2>${name}</h2> 
-              <section class = "details">${detail}</section>
-              <button type="button">Movie Details</button> 
-              </section>
+              <div class="movie">
+                <li><img src="${poster}"> <h2>${name}</h2></li>
+                <section class = "details">${detail}</section>
+                <button type="button">Movie Details</button> 
+              </div>
             `;
           }).join('');
           

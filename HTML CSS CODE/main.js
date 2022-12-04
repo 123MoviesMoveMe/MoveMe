@@ -30,7 +30,7 @@ firebase.initializeApp(firebaseConfig);
 
 
 
-cconst options = {
+const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '0d95dad010msh4cae9bde49252a9p18ee25jsn6278aa0f0acc',
