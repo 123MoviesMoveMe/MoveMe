@@ -30,7 +30,7 @@ const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': 'e5211403d0msh294e51f5227f293p153424jsnc09534c8a754',
-		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+		'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
 	}
 };
 async function delay(time) {
@@ -45,7 +45,7 @@ function seperate(list){
 
 async function searchTopMovies() {
     
-    const url3 = 'https://imdb8.p.rapidapi.com/title/get-most-popular-movies'
+    const url3 = 'https://online-movie-database.p.rapidapi.com/title/get-most-popular-movies'
     fetch(url3, options)
 	.then(response2 => response2.json())
 	.then(data2 => {
