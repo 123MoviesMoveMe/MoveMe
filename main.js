@@ -32,7 +32,7 @@ firebase.initializeApp(firebaseConfig);
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '0d95dad010msh4cae9bde49252a9p18ee25jsn6278aa0f0acc',
+		'X-RapidAPI-Key': 'a62fb629a0mshed9a237e731b6a2p180e5ejsn0a637e076779',
 		'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
 	}
 };
@@ -141,7 +141,7 @@ export function searchMovie(query) {
                     <div class = "well text-center">
                         <li><img src="${poster}">
                         <h2>${name}</h2></li> 
-                        <button id = "unlikebnt" onclick="movieSelected('${detail}')" class="btn btn-primary" href="#">Movie Details</button> 
+                        <button id = "unlikebnt" onclick="movieSelected('${detail}')" class="btn btn-primary">Movie Details</button> 
                     </div>
                 </div>`;
 
