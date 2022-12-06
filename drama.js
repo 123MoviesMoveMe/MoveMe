@@ -30,9 +30,10 @@ const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '0d95dad010msh4cae9bde49252a9p18ee25jsn6278aa0f0acc',
-		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+		'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
 	}
 };
+
 
 async function delay(time) {
   return new Promise(resolve => setTimeout(resolve, time));
@@ -46,7 +47,7 @@ function seperate(list){
 
 async function searchGenre() {
     
-    const url = 'https://imdb8.p.rapidapi.com/title/v2/get-popular-movies-by-genre?genre=adventure&limit=20'
+    const url = 'https://imdb8.p.rapidapi.com/title/v2/get-popular-movies-by-genre?genre=romance&limit=5'
     fetch(url, options)
 	.then(response => response.json())
 	.then(data2 => {
@@ -120,4 +121,5 @@ async function searchGenre() {
         document.getElementById("errorMessage").innerHTML = error;
     });
 }
-console.log(searchGenre())
+console.log(searchGenre()) // shows a list of five movies separated 
+//searchGenre()
